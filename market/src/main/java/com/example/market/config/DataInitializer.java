@@ -15,7 +15,7 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Member member1 = Member.createMember("test1", "1234");
+        Member member1 = Member.createMember("test1", "1234","test1");
 
         memberRepository.save(member1);
     }

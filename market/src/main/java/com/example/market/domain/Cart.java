@@ -15,9 +15,6 @@ public class Cart {
     @Column(name = "cart_id")
     private Long id;
 
-    @OneToOne(mappedBy = "cart")
-    private Member member;
-
     public static Cart createCart() {
         Cart cart = new Cart();
 
