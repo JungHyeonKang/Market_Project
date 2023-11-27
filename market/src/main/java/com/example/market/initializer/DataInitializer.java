@@ -1,4 +1,4 @@
-package com.example.market.config;
+package com.example.market.initializer;
 
 import com.example.market.domain.Cart;
 import com.example.market.domain.Member;
