@@ -1,4 +1,4 @@
-package com.example.market.member;
+package com.example.market.service.member;
 
 import com.example.market.domain.Member;
 import com.example.market.dto.MemberJoinRequest;

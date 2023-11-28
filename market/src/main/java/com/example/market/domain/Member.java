@@ -21,11 +21,14 @@ public class Member extends BaseDateEntity {
     @Column(length = 25,unique = true,nullable = false)
     private String loginId;
 
-    @Column(length = 25,nullable = false)
+    @Column(length = 255,nullable = false)
     private String password;
 
     @Column(length = 25,nullable = false,columnDefinition = "varchar(25) CHARACTER SET utf8mb4")
     private String name;
+
+    @Column(length = 25,nullable = false)
+    private String role;
 
     @JoinColumn(name = "cart_id")
     @OneToOne(fetch = LAZY,cascade = CascadeType.ALL)
@@ -36,6 +39,7 @@ public class Member extends BaseDateEntity {
         member.setLoginId(loginId);
         member.setPassword(password);
         member.setName(name);
+        member.setRole("ROLE_ADMIN");
         member.setCart(Cart.createCart());
         return member;
     }

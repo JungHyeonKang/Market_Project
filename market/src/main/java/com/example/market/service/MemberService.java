@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final CartRepository cartRepository;
+    private final PasswordEncoder passwordEncoder;
     @Transactional
     public ResponseEntity<MemberJoinResponse> join(MemberJoinRequest dto){
 
@@ -36,7 +38,7 @@ public class MemberService {
         }
 
         // 아이디 중복이 아니면, 회원 엔티티 생성 및 저장
-        Member member = Member.createMember(dto.getLoginId(), dto.getPassword(), dto.getName());
+        Member member = Member.createMember(dto.getLoginId(), passwordEncoder.encode(dto.getPassword()), dto.getName());
 
         try {
             Member newMember = memberRepository.save(member);
@@ -47,6 +49,10 @@ public class MemberService {
         }
 
 
+    }
+
+    public Member findMember(String loginId) {
+        return memberRepository.findByLoginId(loginId).orElseThrow();
     }
 
     // 아이디 중복 체크 메서드
