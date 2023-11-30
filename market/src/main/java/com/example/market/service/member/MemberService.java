@@ -1,18 +1,13 @@
-package com.example.market.service;
-
+package com.example.market.service.member;
 import com.example.market.domain.Member;
-import com.example.market.dto.LoginRequest;
-import com.example.market.dto.LoginResponse;
-import com.example.market.dto.MemberJoinRequest;
-import com.example.market.dto.MemberJoinResponse;
-import com.example.market.exception.FailedJoinException;
+import com.example.market.dto.member.MemberJoinRequest;
+import com.example.market.dto.member.MemberJoinResponse;
+import com.example.market.exception.member.FailedJoinException;
 import com.example.market.repository.CartRepository;
-import com.example.market.repository.MemberRepository;
+import com.example.market.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,13 +23,15 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final CartRepository cartRepository;
     private final PasswordEncoder passwordEncoder;
+
+    //회원 가입
     @Transactional
-    public ResponseEntity<MemberJoinResponse> join(MemberJoinRequest dto){
+    public MemberJoinResponse join(MemberJoinRequest dto){
 
         // 아이디 중복일때, 회원가입 거절
         if (isDuplicateMember(dto.getLoginId())) {
 
-            return new ResponseEntity<>(MemberJoinResponse.duplicatedIdResponse(dto.getLoginId()), HttpStatus.BAD_REQUEST);
+            return MemberJoinResponse.duplicatedIdResponse(dto.getLoginId());
         }
 
         // 아이디 중복이 아니면, 회원 엔티티 생성 및 저장
@@ -42,15 +39,14 @@ public class MemberService {
 
         try {
             Member newMember = memberRepository.save(member);
-            return new ResponseEntity<>(MemberJoinResponse.successResponse(newMember.getLoginId()),HttpStatus.OK);
+            return MemberJoinResponse.successResponse(newMember.getLoginId());
         } catch (DataIntegrityViolationException e) {
             // 중복된 loginId로 저장하면 에러 발생
             throw new FailedJoinException("중복된 아이디 입니다.",e);
         }
 
-
     }
-
+    // 회원 조회
     public Member findMember(String loginId) {
         return memberRepository.findByLoginId(loginId).orElseThrow();
     }
@@ -63,20 +59,5 @@ public class MemberService {
         return member.isEmpty() ? false : true;
 
     }
-
-    public ResponseEntity<LoginResponse> login(LoginRequest dto) {
-        // 아이디와 비밀번호를 조회
-        Optional<Member> findMember = memberRepository.findByLoginIdAndPassword(dto.getLoginId(), dto.getPassword());
-        
-        // 조회되지 않으면 로그인 실패
-        if(findMember.isEmpty()){
-            return new ResponseEntity<>(LoginResponse.noMatchMemberResponse(),HttpStatus.NOT_FOUND);
-        }
-        //조회되면 로그인 성공
-        return new ResponseEntity<>(LoginResponse.successResponse(findMember.get().getName()), HttpStatus.OK);
-    }
-
-
-
 
 }

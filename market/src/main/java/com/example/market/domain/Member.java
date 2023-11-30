@@ -40,7 +40,7 @@ public class Member extends BaseDateEntity {
         member.setPassword(password);
         member.setName(name);
         member.setRole("ROLE_ADMIN");
-        member.setCart(Cart.createCart());
+        member.setCart(new Cart());
         return member;
     }
 

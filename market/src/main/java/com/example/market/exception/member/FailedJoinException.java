@@ -1,4 +1,4 @@
-package com.example.market.exception;
+package com.example.market.exception.member;
 
 public class FailedJoinException extends RuntimeException{
 

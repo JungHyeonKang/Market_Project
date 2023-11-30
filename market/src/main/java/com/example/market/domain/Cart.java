@@ -1,6 +1,8 @@
 package com.example.market.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,9 +10,10 @@ import javax.persistence.*;
 @Entity
 @Setter
 @Getter
-public class Cart {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Cart extends BaseDateEntity {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO,generator = "CART_SEQ_GENERATOR")
     @Id
     @Column(name = "cart_id")
     private Long id;
