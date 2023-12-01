@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Setter
@@ -18,9 +20,11 @@ public class Cart extends BaseDateEntity {
     @Column(name = "cart_id")
     private Long id;
 
+    @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL)
+    private List<CartItem> cartItems = new ArrayList<>();
+
     public static Cart createCart() {
         Cart cart = new Cart();
-
         return cart;
     }
 

@@ -46,7 +46,7 @@ public class ItemController {
             ItemSaveResponse response = itemService.saveItem(dto.getName(), dto.getStockQuantity());
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
-            throw new FailedItemSaveException("상품 등록에 실패했습니다",e);
+            throw new FailedItemSaveException(e);
         }
 
     }

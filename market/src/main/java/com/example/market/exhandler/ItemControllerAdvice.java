@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ItemControllerAdvice {
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleFailedItemSaveException(FailedItemSaveException e) {
-        return new ResponseEntity<>(new ErrorResponse("500", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        System.out.println("하이");
+        return new ResponseEntity<>(new ErrorResponse("501", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }

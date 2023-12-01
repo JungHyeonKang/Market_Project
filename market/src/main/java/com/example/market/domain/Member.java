@@ -13,7 +13,7 @@ import static javax.persistence.FetchType.LAZY;
 @Setter
 public class Member extends BaseDateEntity {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO,generator = "MEMBER_SEQ_GENERATOR")
     @Id
     @Column(name = "member_id")
     private Long id;
@@ -43,12 +43,6 @@ public class Member extends BaseDateEntity {
         member.setCart(new Cart());
         return member;
     }
-
-    // member - cart 연관관계 메서드
-//    private void setCart(Cart cart) {
-//        this.cart = cart;
-//        cart.setMember(this);
-//    }
 
 
 }

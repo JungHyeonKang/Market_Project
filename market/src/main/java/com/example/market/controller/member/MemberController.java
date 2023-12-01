@@ -40,8 +40,7 @@ public class MemberController {
             MemberJoinResponse result = memberService.join(dto);
             return new ResponseEntity<>(result,HttpStatus.OK);
         }catch (Exception e){
-            log.info(e.getMessage());
-            throw new FailedJoinException(e.getMessage(),e);
+            throw new FailedJoinException(e);
         }
 
     }

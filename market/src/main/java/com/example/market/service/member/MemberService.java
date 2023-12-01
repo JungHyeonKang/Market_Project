@@ -41,8 +41,8 @@ public class MemberService {
             Member newMember = memberRepository.save(member);
             return MemberJoinResponse.successResponse(newMember.getLoginId());
         } catch (DataIntegrityViolationException e) {
-            // 중복된 loginId로 저장하면 에러 발생
-            throw new FailedJoinException("중복된 아이디 입니다.",e);
+            // 중복된 loginId로 회원가입 할때
+            return MemberJoinResponse.duplicatedIdResponse(dto.getLoginId());
         }
 
     }

@@ -17,5 +17,4 @@ public class MemberControllerAdvice {
     public ResponseEntity<ErrorResponse> handleMemberJoinException(FailedJoinException e) {
         return new ResponseEntity<>(new ErrorResponse("500", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 }
