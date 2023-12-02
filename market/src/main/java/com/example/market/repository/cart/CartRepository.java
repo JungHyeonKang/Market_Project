@@ -1,4 +1,4 @@
-package com.example.market.repository;
+package com.example.market.repository.cart;
 
 import com.example.market.domain.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;

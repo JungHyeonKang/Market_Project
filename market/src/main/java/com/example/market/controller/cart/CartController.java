@@ -1,9 +1,9 @@
-package com.example.market.controller;
+package com.example.market.controller.cart;
 
 import com.example.market.dto.cart.AddToCartRequest;
 import com.example.market.dto.cart.AddToCartResponse;
 import com.example.market.exception.cart.FailedAddToCartException;
-import com.example.market.service.CartService;
+import com.example.market.service.cart.CartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

@@ -31,7 +31,7 @@ public class Member extends BaseDateEntity {
     private String role;
 
     @JoinColumn(name = "cart_id")
-    @OneToOne(fetch = LAZY,cascade = CascadeType.ALL)
+    @OneToOne(fetch = LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private Cart cart;
 
     public static Member createMember(String loginId , String password,String name){

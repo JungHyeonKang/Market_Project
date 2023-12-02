@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CartItem extends BaseDateEntity {
 
     @Id
@@ -30,13 +31,16 @@ public class CartItem extends BaseDateEntity {
 
     private int quantity;
 
+    private String name;
+
     public static CartItem createCartItem(Cart cart ,Item item , int quantity) {
         CartItem cartItem = new CartItem();
         cartItem.setCart(cart);
         cartItem.setQuantity(quantity);
         cartItem.setItem(item);
-
-        item.reduceStock(quantity);
+        cartItem.setName(item.getName());
+        // 해당 상품 재고 확인 후 객체 생성
+        item.checkStock(quantity);
         return cartItem;
     }
 

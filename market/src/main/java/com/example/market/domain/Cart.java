@@ -20,7 +20,7 @@ public class Cart extends BaseDateEntity {
     @Column(name = "cart_id")
     private Long id;
 
-    @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<CartItem> cartItems = new ArrayList<>();
 
     public static Cart createCart() {

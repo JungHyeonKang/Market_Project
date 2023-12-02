@@ -1,10 +1,10 @@
-package com.example.market.service;
+package com.example.market.service.cart;
 
 import com.example.market.domain.Cart;
 import com.example.market.domain.Item;
 import com.example.market.dto.cart.AddToCartResponse;
-import com.example.market.dto.member.MemberJoinRequest;
-import com.example.market.repository.CartRepository;
+import com.example.market.exception.cart.InsufficientStockException;
+import com.example.market.repository.cart.CartRepository;
 import com.example.market.repository.cartItem.CartItemRepository;
 import com.example.market.repository.item.ItemRepository;
 import org.junit.jupiter.api.Assertions;
@@ -14,14 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @SpringBootTest
 public class CartServiceTest {
@@ -47,7 +42,7 @@ public class CartServiceTest {
 
         //given
         Optional<Cart> cart= cartRepository.findById(1L);
-        Optional<Item> item = itemRepository.findById(10L);
+        Optional<Item> item = itemRepository.findById(1L);
     
         //when
 
@@ -72,41 +67,19 @@ public class CartServiceTest {
     }
 
     @Test
-    @DisplayName("동시에 2명의 유저가 재고가 1인 상품을 장바구니에 1개씩 넣었을때  상황")
-    @Rollback(value = true)
-    @Transactional
-    public void 장바구니넣기_동시성체크() throws Exception {
-        //given
-//        cartRepository.save(Cart.createCart());
-//        cartRepository.save(Cart.createCart());
-//
-//        itemRepository.save(Item.createItem("테스트",1));
-        //when
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
-        CountDownLatch countDownLatch = new CountDownLatch(2);
-        executorService.execute(()->{
-            cartService.addToCart(1L, 1L, 1);
-            countDownLatch.countDown();
-        });
-        executorService.execute(()->{
-            cartService.addToCart(2L, 1L, 1);
-            countDownLatch.countDown();
-        });
-        countDownLatch.await();
-        //the
-        Assertions.assertTrue(cartItemRepository.findAll().size() == 1);
-
-    }
-
-    @Test
-    public void 테스트() throws Exception {
+    @DisplayName("상품 재고가 부족할때")
+    public void 장바구니실패2() throws Exception {
         //given
 
-
-        //when
+        Optional<Cart> cart= cartRepository.findById(1L);
+        Optional<Item> item = itemRepository.findById(1L);
 
 
         //then
-
+        Assertions.assertThrows(InsufficientStockException.class,()->{
+            cartService.addToCart(cart.get().getId(), item.get().getId(), 10);
+        });
     }
+
+
 }

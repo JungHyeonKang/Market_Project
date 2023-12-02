@@ -25,13 +25,25 @@ public class Item extends BaseDateEntity{
         item.setStock(stock);
         return item;
     }
-    //재고 감소
-    public void reduceStock(int quantity) {
+    //재고 확인
+    public void checkStock(int quantity) {
         int restStock = this.stock - quantity;
         if (restStock < 0) {
-            throw new InsufficientStockException();
+            throw new InsufficientStockException("선택한 상품의 재고가 부족합니다.");
+        }
+
+    }
+    //재고 감소
+    public void decreaseStock(int quantity) {
+        int restStock = this.stock - quantity;
+        if (restStock < 0) {
+            throw new InsufficientStockException("주문 상품의 재고가 부족합니다.");
         }
         this.stock = restStock;
+    }
+
+    public void increaseStock(int quantity) {
+        this.stock = this.stock + quantity;
     }
 
 
