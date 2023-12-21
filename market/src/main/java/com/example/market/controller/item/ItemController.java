@@ -21,18 +21,13 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api/item")
+@RequestMapping("/api/items")
 public class ItemController {
 
     private final ItemService itemService;
 
-    @GetMapping("/list")
-    public ResponseEntity<List<ItemListResponse>> getItemList() {
-        List<Item> items = itemService.findItems();
-        return null;
-    }
 
-    @PostMapping("/save")
+    @PostMapping("")
     public ResponseEntity<ItemSaveResponse> saveItem(@RequestBody @Valid ItemSaveRequest dto,BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {

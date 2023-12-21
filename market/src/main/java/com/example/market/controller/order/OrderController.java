@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api/order")
+@RequestMapping("/api/orders")
 public class OrderController {
     private final OrderService orderService;
 
-    @PostMapping("/save/{memberId}")
-    public ResponseEntity<OrderSaveResponse> order(@PathVariable Long memberId) {
+    @PostMapping("{cartId}/save")
+    public ResponseEntity<OrderSaveResponse> order(@PathVariable Long cartId) {
 
-        OrderSaveResponse response = orderService.order(memberId);
+        OrderSaveResponse response = orderService.order(cartId);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PatchMapping("/cancel/{orderId}")
+    @PostMapping("{orderId}/cancel")
     public ResponseEntity<OrderCancelResponse> cancel(@PathVariable Long orderId) {
 
         OrderCancelResponse response = orderService.cancel(orderId);

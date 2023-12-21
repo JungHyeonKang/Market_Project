@@ -10,10 +10,6 @@ import java.util.Optional;
 
 public interface ItemRepository extends JpaRepository<Item,Long> {
 
-//    @Override
-//    @Lock(LockModeType.PESSIMISTIC_WRITE)
-//    Optional<Item> findById(Long id);
-
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select i from Item i where i.id= :id")
     Optional<Item> findByIdWithPessimisticLock(Long id);

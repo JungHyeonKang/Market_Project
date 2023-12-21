@@ -7,6 +7,8 @@ import com.example.market.exception.cart.InsufficientStockException;
 import com.example.market.exception.cartitem.CartItemEmptyException;
 import com.example.market.exception.item.ItemNotFoundException;
 import com.example.market.exception.member.MemberNotFoundException;
+import com.example.market.exception.order.OrderAlreadyCanceledException;
+import com.example.market.exception.order.OrderNotFoundException;
 import com.example.market.exhandler.dto.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,6 +37,16 @@ public class OrderControllerAdvice {
     }
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleCartItemEmptyException(CartItemEmptyException e) {
+        return new ResponseEntity<>(new ErrorResponse("500",e.getMessage()), HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleOrderNotFoundException(OrderNotFoundException e) {
+        return new ResponseEntity<>(new ErrorResponse("404",e.getMessage()), HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleOrderAlreadyCanceledException(OrderAlreadyCanceledException e) {
         return new ResponseEntity<>(new ErrorResponse("500",e.getMessage()), HttpStatus.SERVICE_UNAVAILABLE);
     }
 

@@ -1,5 +1,6 @@
 package com.example.market.dto.member;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -7,6 +8,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Data
+@AllArgsConstructor
 public class MemberJoinRequest {
 
     @NotNull

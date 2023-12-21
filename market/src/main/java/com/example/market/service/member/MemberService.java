@@ -1,4 +1,5 @@
 package com.example.market.service.member;
+import com.example.market.domain.Cart;
 import com.example.market.domain.Member;
 import com.example.market.dto.member.MemberJoinRequest;
 import com.example.market.dto.member.MemberJoinResponse;
@@ -38,6 +39,7 @@ public class MemberService {
 
         try {
             Member newMember = memberRepository.save(member);
+            cartRepository.save(new Cart(newMember));
             return MemberJoinResponse.successResponse(newMember.getLoginId());
         } catch (DataIntegrityViolationException e) {
             // 중복된 loginId로 회원가입 할때

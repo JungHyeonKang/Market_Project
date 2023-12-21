@@ -32,7 +32,7 @@ public class OrderItem extends BaseDateEntity{
         orderItem.setItem(item);
         orderItem.setName(item.getName());
         orderItem.setQuantity(quantity);
-        // 상품 재고감소
+        // 상품 재고감소 이때 락을 걸자
         item.decreaseStock(quantity);
         return orderItem;
     };

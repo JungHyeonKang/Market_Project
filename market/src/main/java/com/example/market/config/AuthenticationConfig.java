@@ -23,7 +23,7 @@ public class AuthenticationConfig {
 
         http.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers(new AntPathRequestMatcher("/api/member/register")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/api/members")).permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login

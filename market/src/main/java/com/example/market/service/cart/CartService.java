@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -30,7 +32,7 @@ public class CartService {
     public AddToCartResponse addToCart(Long cartId, Long itemId, int quantity) {
         Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new CartNotFoundException());
 
-        Item item = itemRepository.findByIdWithPessimisticLock(itemId).orElseThrow(() -> new ItemNotFoundException());
+        Item item = itemRepository.findById(itemId).orElseThrow(() -> new ItemNotFoundException());
 
         CartItem cartItem = CartItem.createCartItem(cart, item, quantity);
 
@@ -39,4 +41,5 @@ public class CartService {
         return AddToCartResponse.successResponse(addedCartItem.getId());
 
     }
+
 }

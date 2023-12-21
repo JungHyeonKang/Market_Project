@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @SpringBootTest
-@Transactional
+//@Transactional
 public class ItemServiceTest {
 
     @Autowired
@@ -29,6 +29,7 @@ public class ItemServiceTest {
 
         //when
         ItemSaveResponse response = itemService.saveItem("testItem", 999999999);
+
         Optional<Item> findItem = itemRepository.findById(response.getId());
 
         //then

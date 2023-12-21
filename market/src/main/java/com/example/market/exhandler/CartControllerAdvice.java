@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice(basePackageClasses  = {CartController.class, CartService.class})
+@RestControllerAdvice(basePackageClasses  = {CartController.class})
 public class CartControllerAdvice {
 
     @ExceptionHandler
@@ -28,12 +28,12 @@ public class CartControllerAdvice {
         return new ResponseEntity<>(new ErrorResponse("404", e.getMessage()), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException e) {
-        return new ResponseEntity<>(new ErrorResponse("400", "잘못된 요청입니다."), HttpStatus.BAD_REQUEST);
-    }
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleException(Exception e) {
-        return new ResponseEntity<>(new ErrorResponse("500", "요청에 실패했습니다. 관리자에게 문의 해주세요."), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @ExceptionHandler
+//    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException e) {
+//        return new ResponseEntity<>(new ErrorResponse("400", "잘못된 요청입니다."), HttpStatus.BAD_REQUEST);
+//    }
+//    @ExceptionHandler
+//    public ResponseEntity<ErrorResponse> handleException(Exception e) {
+//        return new ResponseEntity<>(new ErrorResponse("500", "요청에 실패했습니다. 관리자에게 문의 해주세요."), HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 }

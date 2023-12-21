@@ -1,17 +1,17 @@
 package com.example.market.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
-@Setter
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Cart extends BaseDateEntity {
 
@@ -23,9 +23,12 @@ public class Cart extends BaseDateEntity {
     @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<CartItem> cartItems = new ArrayList<>();
 
-    public static Cart createCart() {
-        Cart cart = new Cart();
-        return cart;
-    }
+    @JoinColumn(name = "member_id")
+    @OneToOne(fetch = LAZY)
+    private Member member;
 
+
+    public Cart(Member member) {
+        this.member = member;
+    }
 }

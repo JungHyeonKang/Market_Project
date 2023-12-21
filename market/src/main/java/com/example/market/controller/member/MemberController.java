@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api/member")
+@RequestMapping("/api/members")
 public class MemberController {
 
     private final MemberService memberService;
 
-    @PostMapping("/register")
+    @PostMapping("")
     public ResponseEntity<MemberJoinResponse> MemberRegister(@RequestBody @Valid MemberJoinRequest dto,BindingResult bindingResult){
 
         // 검증 오류가 있는 경우

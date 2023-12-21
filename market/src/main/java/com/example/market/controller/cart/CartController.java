@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/api/cart")
+@RequestMapping("/api/carts")
 public class CartController {
     private final CartService cartService;
 
-    @PostMapping("/add")
+    @PostMapping("")
     public ResponseEntity<AddToCartResponse> addToCart(@RequestBody AddToCartRequest dto) {
         try {
             AddToCartResponse addToCartResponse = cartService.addToCart(dto.getCartId(), dto.getItemId(), dto.getQuantity());
@@ -29,7 +29,6 @@ public class CartController {
         } catch (Exception e) {
             throw new FailedAddToCartException(e);
         }
-
 
     }
 }

@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
@@ -30,19 +33,18 @@ public class Member extends BaseDateEntity {
     @Column(length = 25,nullable = false)
     private String role;
 
-    @JoinColumn(name = "cart_id")
-    @OneToOne(fetch = LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(mappedBy = "member" , cascade = CascadeType.ALL)
     private Cart cart;
-
     public static Member createMember(String loginId , String password,String name){
         Member member = new Member();
         member.setLoginId(loginId);
         member.setPassword(password);
         member.setName(name);
         member.setRole("ROLE_ADMIN");
-        member.setCart(new Cart());
         return member;
     }
+
+
 
 
 }
